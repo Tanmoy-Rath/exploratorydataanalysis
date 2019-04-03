@@ -171,7 +171,7 @@ plot <- barplot(height = total_emissions$Emissions/1000, # dividing by 1000 conv
                 xlab="Time in years", ylab=expression('Total PM'[2.5]*' emissions in Kilo-tons'),
                 ylim=c(0,8100),
                 names.arg = total_emissions$year,
-                main=expression('Total PM'[2.5]*' emissions across United States in Kilo-tons'),col=c("#9403BE","#7903B8","#7903B8"))
+                main=expression('Total PM'[2.5]*' emissions across United States in Kilo-tons'),col=c("#800080","#D896FF","#BE29EC","#660066"))
 
 ## Adding values above the bars
 text(x = plot,
@@ -196,10 +196,10 @@ par(bg="#FFFFFF")
 baltimore <- NEI[NEI$fips=="24510",]
 total_emissions <- dplyr::summarise(  dplyr::group_by(baltimore, year), Emissions=sum(Emissions)  )
 plot <- barplot(height = total_emissions$Emissions,
-                xlab="Time in years", ylab=expression('Baltimore City PM'[2.5]*' emissions in tons'),
+                xlab="Time in years", ylab=expression('Total PM'[2.5]*' emissions of Baltimore City in tons'),
                 ylim=c(0,3800),
                 names.arg = total_emissions$year,
-                main=expression('Baltimore City PM'[2.5]*' emissions in tons'),col=c("#7903B8","#9403BE"))
+                main=expression('Total PM'[2.5]*' emissions of Baltimore City in tons'),col=c("#C22326","#FDB632","#F37338","#801638"))
 
 ## Adding values above the bars
 text(x = plot,
