@@ -151,9 +151,9 @@ sum(is.na(  SCC$SCC  )),
       sum(  SCC$SCC==" "  ),
       sum(  SCC$SCC==""  )
 )
-
-# All the above sums, were found to be zero, hence there aren't any NA values in those columns
 ```
+
+All the above sums, were found to be zero, hence there aren't any NA values in those columns
 
 
 
