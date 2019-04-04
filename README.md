@@ -43,6 +43,7 @@ text(x = plot,
      pos = 3, cex = 1, col = "black", font=2)
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot1.png "plot1")
+
 --------------------------------------------------------------------------------------------------
 #### Question 2
 Have total emissions from PM2.5 decreased in the <strong>Baltimore City</strong>, Maryland (<font color="red"><strong>fips=="24510"</strong></font>) from 1999 to 2008? Use the <strong>base</strong> plotting system to make a plot answering this question.
@@ -63,6 +64,8 @@ text(x = plot,
      label = round(total_emissions$Emissions,3),
      pos = 3, cex = 1, col = "black", font=2)
 ```
+![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot2.png "plot2")
+
 --------------------------------------------------------------------------------------------------
 #### Question 3
 Of the four types of sources indicated by the <font color="red"><strong>type</strong></font> (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for <strong>Baltimore City</strong>? Which have seen increases in emissions from 1999–2008? Use the <strong>ggplot2</strong> plotting system to make a plot answer this question.
@@ -80,6 +83,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=type)
     ggtitle(label=expression('Baltimore City PM'[2.5]*' emissions, faceted by emission type'))+
     theme(plot.title = element_text(hjust = 0.5),legend.position="none")
 ```
+![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot3.png "plot3")
+
 --------------------------------------------------------------------------------------------------
 #### Question 4
 Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
@@ -110,6 +115,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=year)
     ggtitle(label=expression('Emissions of PM'[2.5]*' across United States from coal combustion-related sources'))+
     theme(plot.title = element_text(hjust = 0.5),legend.position="none")
 ```
+![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot4.png "plot4")
+
 --------------------------------------------------------------------------------------------------
 #### Question 5
 How have emissions from motor vehicle sources changed from 1999–2008 in <strong>Baltimore City</strong>?
@@ -138,6 +145,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year), y=Emissions))+
         ggtitle(label=expression('PM'[2.5]*' emissions from motor vehicle sources in Baltimore City, Maryland'))+
         theme(plot.title = element_text(hjust = 0.5))
 ```
+![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot5.png "plot5")
+
 --------------------------------------------------------------------------------------------------
 #### Question 6
 Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in <strong>Los Angeles County</strong>, California (<font color="red"><strong>fips=="06037"</strong></font>). Which city has seen greater changes over time in motor vehicle emissions?
@@ -159,4 +168,6 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=fips)
         ggtitle(label=expression('Los Angeles & Baltimore City\'s PM'[2.5]*' emissions in tons'))+
         theme(plot.title = element_text(hjust = 0.5),legend.position="none")
 ```
+![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot6.png "plot6")
+
 --------------------------------------------------------------------------------------------------
