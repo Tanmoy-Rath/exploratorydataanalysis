@@ -64,6 +64,51 @@ text(x = plot,
      label = round(total_emissions$Emissions,3),
      pos = 3, cex = 1, col = "black", font=2)
 ```
+--------------------------------------------------------------------------------------------------
+#### Question 3
+Of the four types of sources indicated by the <font color="red"><strong>type</strong></font> (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for <strong>Baltimore City</strong>? Which have seen increases in emissions from 1999–2008? Use the <strong>ggplot2</strong> plotting system to make a plot answer this question.
+```R
+# PLOT
+library(ggplot2)
+baltimore <- NEI[NEI$fips=="24510",]
+total_emissions <- dplyr::summarise(  dplyr::group_by(baltimore, type, year), Emissions=sum(Emissions)  )
+ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=type)) +
+    geom_bar(stat="identity") + 
+    geom_label(aes(label=round(Emissions,2)), colour = "black", fontface = "bold", fill="white")+
+    facet_grid(.~type)+
+    xlab("Years")+
+    ylab(expression('Baltimore City PM'[2.5]*' emissions in tons'))+
+    ggtitle(label=expression('Baltimore City PM'[2.5]*' emissions, faceted by emission type'))+
+    theme(plot.title = element_text(hjust = 0.5),legend.position="none")
+```
+--------------------------------------------------------------------------------------------------
+#### Question 4
+Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
 
+<strong>SCC$EI.Sector</strong> lists the sources of combustion
+```R
+unique(SCC$EI.Sector)
 
+# From the list of unique, the 3 sources given below are the coal combustion sources
+# "Fuel Comb - Electric Generation - Coal"
+# "Fuel Comb - Comm/Institutional - Coal"
+# "Fuel Comb - Industrial Boilers, ICEs - Coal"
 
+sources <- SCC$EI.Sector %in% c(
+        "Fuel Comb - Electric Generation - Coal",
+        "Fuel Comb - Comm/Institutional - Coal",
+        "Fuel Comb - Industrial Boilers, ICEs - Coal")
+
+coal <- NEI$SCC %in% SCC[sources,]$SCC
+nei_coal <- NEI[coal,]
+
+total_emissions <- dplyr::summarise(  dplyr::group_by(nei_coal, year), Emissions=sum(Emissions)/1000  )
+
+ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=year))+
+    geom_bar(stat="identity")+
+    geom_label(aes(label=round(Emissions,2)), colour = "black", fontface = "bold", fill="white")+
+    xlab("Time in years")+
+    ylab(expression('Total PM'[2.5]*' emissions in kilo-tons'))+
+    ggtitle(label=expression('Emissions of PM'[2.5]*' across United States from coal combustion-related sources'))+
+    theme(plot.title = element_text(hjust = 0.5),legend.position="none")
+```
