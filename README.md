@@ -26,7 +26,6 @@ sum(is.na(  SCC$SCC  )),
 --------------------------------------------------------------------------------------------------
 #### Question 1
 Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the <strong>base</strong> plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
-
 ```R
 # PLOT
 par(bg="#FFFFFF")
@@ -46,7 +45,6 @@ text(x = plot,
 --------------------------------------------------------------------------------------------------
 #### Question 2
 Have total emissions from PM2.5 decreased in the <strong>Baltimore City</strong>, Maryland (<font color="red"><strong>fips=="24510"</strong></font>) from 1999 to 2008? Use the <strong>base</strong> plotting system to make a plot answering this question.
-
 ```R
 # PLOT
 par(bg="#FFFFFF")
@@ -84,9 +82,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=type)
 --------------------------------------------------------------------------------------------------
 #### Question 4
 Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
-
-<strong>SCC$EI.Sector</strong> lists the sources of combustion
 ```R
+# SCC$EI.Sector lists the sources of combustion
 unique(SCC$EI.Sector)
 
 # From the list of unique, the 3 sources given below are the coal combustion sources
@@ -112,3 +109,53 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=year)
     ggtitle(label=expression('Emissions of PM'[2.5]*' across United States from coal combustion-related sources'))+
     theme(plot.title = element_text(hjust = 0.5),legend.position="none")
 ```
+--------------------------------------------------------------------------------------------------
+#### Question 5
+How have emissions from motor vehicle sources changed from 1999–2008 in <strong>Baltimore City</strong>?
+```R
+# SCC$EI.Sector lists the sources of combustion
+unique(SCC$EI.Sector)
+
+# From the list of unique, these 4 sources given below are sources of emissions from motor vehicles
+sources <- c(
+        "Mobile - On-Road Gasoline Light Duty Vehicles",
+        "Mobile - On-Road Gasoline Heavy Duty Vehicles",
+        "Mobile - On-Road Diesel Light Duty Vehicles",
+        "Mobile - On-Road Diesel Heavy Duty Vehicles")
+
+scc2 <- SCC[ SCC$EI.Sector %in% sources, ]
+temp <- NEI[ NEI$SCC %in% scc2$SCC, ]
+baltimore <- temp[ temp$fips %in% "24510", ]
+
+total_emissions <- dplyr::summarise( dplyr::group_by(baltimore, year), Emissions=sum(Emissions))
+
+ggplot(data=total_emissions, mapping = aes(x=factor(year), y=Emissions))+
+        geom_bar(stat="identity",fill=c("#F9766E","#00BEC6","#00BEC6","#F9766E"))+
+        geom_label(mapping = aes(x=factor(year),y=Emissions,label=round(Emissions,2)))+
+        xlab("Years")+
+        ylab(expression('Baltimore City, Maryland emissions in tons'))+
+        ggtitle(label=expression('PM'[2.5]*' emissions from motor vehicle sources in Baltimore City, Maryland'))+
+        theme(plot.title = element_text(hjust = 0.5))
+```
+--------------------------------------------------------------------------------------------------
+#### Question 6
+Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in <strong>Los Angeles County</strong>, California (<font color="red"><strong>fips=="06037"</strong></font>). Which city has seen greater changes over time in motor vehicle emissions?
+```R
+scc2 <- SCC[ SCC$EI.Sector %in% sources, ]
+temp <- NEI[ NEI$SCC %in% scc2$SCC, ]
+bal_los <- temp[ temp$fips %in% c("24510","06037"), ]
+bal_los$fips <- as.factor(bal_los$fips)
+levels(bal_los$fips) <- c("Los Angeles County, California","Baltimore City, Maryland")
+
+# PLOT
+total_emissions <- dplyr::summarise( dplyr::group_by(bal_los, fips, year), Emissions=sum(Emissions) )
+ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=fips))+
+        geom_bar(stat="identity")+
+        geom_label(aes(label=round(Emissions,2)), colour = "black", fontface = "bold", fill="white")+
+        facet_grid(.~fips)+
+        xlab("Years")+
+        ylab(expression('PM'[2.5]*' emissions in tons'))+
+        ggtitle(label=expression('Los Angeles & Baltimore City\'s PM'[2.5]*' emissions in tons'))+
+        theme(plot.title = element_text(hjust = 0.5),legend.position="none")
+```
+--------------------------------------------------------------------------------------------------
