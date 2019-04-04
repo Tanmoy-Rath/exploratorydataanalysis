@@ -23,11 +23,11 @@ sum(is.na(  SCC$SCC  )),
 )
 ```
 ###### All the above sums, were found to be zero, hence there aren't any NA values in those columns.
-
+--------------------------------------------------------------------------------------------------
 #### Question 1
 Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the <strong>base</strong> plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
 
-```{r plot1, echo=TRUE}
+```R
 # PLOT
 par(bg="#FFFFFF")
 total_emissions <- dplyr::summarise(  dplyr::group_by(NEI, year), Emissions=sum(Emissions)  )
@@ -43,3 +43,27 @@ text(x = plot,
      label = round(total_emissions$Emissions/1000,3),
      pos = 3, cex = 1, col = "black", font=2)
 ```
+--------------------------------------------------------------------------------------------------
+#### Question 2
+Have total emissions from PM2.5 decreased in the <strong>Baltimore City</strong>, Maryland (<font color="red"><strong>fips=="24510"</strong></font>) from 1999 to 2008? Use the <strong>base</strong> plotting system to make a plot answering this question.
+
+```R
+# PLOT
+par(bg="#FFFFFF")
+baltimore <- NEI[NEI$fips=="24510",]
+total_emissions <- dplyr::summarise(  dplyr::group_by(baltimore, year), Emissions=sum(Emissions)  )
+plot <- barplot(height = total_emissions$Emissions,
+                xlab="Time in years", ylab=expression('Total PM'[2.5]*' emissions of Baltimore City in tons'),
+                ylim=c(0,3800),
+                names.arg = total_emissions$year,
+                main=expression('Total PM'[2.5]*' emissions of Baltimore City in tons'),col=c("#C22326","#FDB632","#F37338","#801638"))
+
+## Adding values above the bars
+text(x = plot,
+     y = round(total_emissions$Emissions,6),
+     label = round(total_emissions$Emissions,3),
+     pos = 3, cex = 1, col = "black", font=2)
+```
+
+
+
