@@ -42,6 +42,7 @@ text(x = plot,
      label = round(total_emissions$Emissions/1000,3),
      pos = 3, cex = 1, col = "black", font=2)
 ```
+![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot1.png "plot1")
 --------------------------------------------------------------------------------------------------
 #### Question 2
 Have total emissions from PM2.5 decreased in the <strong>Baltimore City</strong>, Maryland (<font color="red"><strong>fips=="24510"</strong></font>) from 1999 to 2008? Use the <strong>base</strong> plotting system to make a plot answering this question.
