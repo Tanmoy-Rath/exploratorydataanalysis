@@ -116,7 +116,6 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=year)
     theme(plot.title = element_text(hjust = 0.5),legend.position="none")
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot4.png "plot4")
-
 --------------------------------------------------------------------------------------------------
 #### Question 5
 How have emissions from motor vehicle sources changed from 1999–2008 in <strong>Baltimore City</strong>?
