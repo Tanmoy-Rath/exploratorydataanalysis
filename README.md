@@ -27,9 +27,12 @@ sum(is.na(  SCC$SCC  )),
 #### Question 1
 Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the <strong>base</strong> plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
 ```R
-# PLOT
-par(bg="#FFFFFF")
 total_emissions <- dplyr::summarise(  dplyr::group_by(NEI, year), Emissions=sum(Emissions)  )
+
+# PLOT
+png(filename = "plot1.png", width=600, height=600)
+
+par(bg="#FFFFFF")
 plot <- barplot(height = total_emissions$Emissions/1000, # dividing by 1000 converts y-axis to kilo-tons
                 xlab="Time in years", ylab=expression('Total PM'[2.5]*' emissions in Kilo-tons'),
                 ylim=c(0,8100),
@@ -41,6 +44,8 @@ text(x = plot,
      y = round(total_emissions$Emissions/1000,6),
      label = round(total_emissions$Emissions/1000,3),
      pos = 3, cex = 1, col = "black", font=2)
+        
+dev.off()
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot1.png "plot1")
 
@@ -48,10 +53,13 @@ text(x = plot,
 #### Question 2
 Have total emissions from PM2.5 decreased in the <strong>Baltimore City</strong>, Maryland (<font color="red"><strong>fips=="24510"</strong></font>) from 1999 to 2008? Use the <strong>base</strong> plotting system to make a plot answering this question.
 ```R
-# PLOT
-par(bg="#FFFFFF")
 baltimore <- NEI[NEI$fips=="24510",]
 total_emissions <- dplyr::summarise(  dplyr::group_by(baltimore, year), Emissions=sum(Emissions)  )
+
+# PLOT
+png(filename = "plot2.png", width=600, height=600)
+
+par(bg="#FFFFFF")
 plot <- barplot(height = total_emissions$Emissions,
                 xlab="Time in years", ylab=expression('Total PM'[2.5]*' emissions of Baltimore City in tons'),
                 ylim=c(0,3800),
@@ -63,6 +71,8 @@ text(x = plot,
      y = round(total_emissions$Emissions,6),
      label = round(total_emissions$Emissions,3),
      pos = 3, cex = 1, col = "black", font=2)
+        
+dev.off()
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot2.png "plot2")
 
@@ -70,10 +80,13 @@ text(x = plot,
 #### Question 3
 Of the four types of sources indicated by the <font color="red"><strong>type</strong></font> (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for <strong>Baltimore City</strong>? Which have seen increases in emissions from 1999–2008? Use the <strong>ggplot2</strong> plotting system to make a plot answer this question.
 ```R
-# PLOT
-library(ggplot2)
 baltimore <- NEI[NEI$fips=="24510",]
 total_emissions <- dplyr::summarise(  dplyr::group_by(baltimore, type, year), Emissions=sum(Emissions)  )
+
+# PLOT
+png(filename = "plot3.png", width=978, height=550)
+
+library(ggplot2)
 ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=type)) +
     geom_bar(stat="identity") + 
     geom_label(aes(label=round(Emissions,2)), colour = "black", fontface = "bold", fill="white")+
@@ -82,6 +95,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=type)
     ylab(expression('Baltimore City PM'[2.5]*' emissions in tons'))+
     ggtitle(label=expression('Baltimore City PM'[2.5]*' emissions, faceted by emission type'))+
     theme(plot.title = element_text(hjust = 0.5),legend.position="none")
+        
+dev.off()
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot3.png "plot3")
 
@@ -107,6 +122,9 @@ nei_coal <- NEI[coal,]
 
 total_emissions <- dplyr::summarise(  dplyr::group_by(nei_coal, year), Emissions=sum(Emissions)/1000  )
 
+# PLOT
+png(filename = "plot4.png", width=600, height=600)
+
 ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=year))+
     geom_bar(stat="identity")+
     geom_label(aes(label=round(Emissions,2)), colour = "black", fontface = "bold", fill="white")+
@@ -114,6 +132,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=year)
     ylab(expression('Total PM'[2.5]*' emissions in kilo-tons'))+
     ggtitle(label=expression('Emissions of PM'[2.5]*' across United States from coal combustion-related sources'))+
     theme(plot.title = element_text(hjust = 0.5),legend.position="none")
+        
+dev.off()
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot4.png "plot4")
 --------------------------------------------------------------------------------------------------
@@ -136,6 +156,9 @@ baltimore <- temp[ temp$fips %in% "24510", ]
 
 total_emissions <- dplyr::summarise( dplyr::group_by(baltimore, year), Emissions=sum(Emissions))
 
+# PLOT
+png(filename = "plot5.png", width=600, height=600)
+
 ggplot(data=total_emissions, mapping = aes(x=factor(year), y=Emissions))+
         geom_bar(stat="identity",fill=c("#F9766E","#00BEC6","#00BEC6","#F9766E"))+
         geom_label(mapping = aes(x=factor(year),y=Emissions,label=round(Emissions,2)))+
@@ -143,6 +166,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year), y=Emissions))+
         ylab(expression('Baltimore City, Maryland emissions in tons'))+
         ggtitle(label=expression('PM'[2.5]*' emissions from motor vehicle sources in Baltimore City, Maryland'))+
         theme(plot.title = element_text(hjust = 0.5))
+        
+dev.off()
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot5.png "plot5")
 
@@ -156,8 +181,11 @@ bal_los <- temp[ temp$fips %in% c("24510","06037"), ]
 bal_los$fips <- as.factor(bal_los$fips)
 levels(bal_los$fips) <- c("Los Angeles County, California","Baltimore City, Maryland")
 
-# PLOT
 total_emissions <- dplyr::summarise( dplyr::group_by(bal_los, fips, year), Emissions=sum(Emissions) )
+
+# PLOT
+png(filename = "plot6.png", width=978, height=550)
+
 ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=fips))+
         geom_bar(stat="identity")+
         geom_label(aes(label=round(Emissions,2)), colour = "black", fontface = "bold", fill="white")+
@@ -166,6 +194,8 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=fips)
         ylab(expression('PM'[2.5]*' emissions in tons'))+
         ggtitle(label=expression('Los Angeles & Baltimore City\'s PM'[2.5]*' emissions in tons'))+
         theme(plot.title = element_text(hjust = 0.5),legend.position="none")
+        
+dev.off()
 ```
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot6.png "plot6")
 
