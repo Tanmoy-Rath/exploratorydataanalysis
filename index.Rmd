@@ -348,4 +348,4 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=fips)
 
 ## Conclusion
 
-This brings us to the end of the assignment which was answered sufficiently by plotting systems of R.
+This brings us to the end of the course assignment which was answered sufficiently by the plotting systems of R.
