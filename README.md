@@ -171,3 +171,13 @@ ggplot(data=total_emissions, mapping = aes(x=factor(year),y=Emissions,fill=fips)
 ![alt text](https://raw.githubusercontent.com/Tanmoy-Rath/exploratorydataanalysis/gh-pages/plot6.png "plot6")
 
 --------------------------------------------------------------------------------------------------
+
+#### Sources
+
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+https://r-statistics.co/Complete-Ggplot2-Tutorial-Part2-Customizing-Theme-With-R-Code.html
+
+http://www.cookbook-r.com/Graphs/
+
+https://stackoverflow.com/questions/37755037/how-to-add-code-folding-to-output-chunks-in-rmarkdown-html-documents
